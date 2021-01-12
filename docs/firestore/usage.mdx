@@ -25,7 +25,6 @@ FirebaseApp secondaryApp = Firebase.app('SecondaryApp');
 FirebaseFirestore firestore = FirebaseFirestore.instanceFor(app: secondaryApp);
 ```
 
-## Collections & Documents
 
 Firestore stores data within "documents", which are contained within "collections". Documents can also contain
 nested collections. For example, our users would each have their own "document" stored inside the "Users" collection.
@@ -153,7 +152,7 @@ class UserInformation extends StatelessWidget {
         }
 
         return new ListView(
-          children: snapshot.data.documents.map((DocumentSnapshot document) {
+          children: snapshot.data.docs.map((DocumentSnapshot document) {
             return new ListTile(
               title: new Text(document.data()['full_name']),
               subtitle: new Text(document.data()['company']),
@@ -612,7 +611,7 @@ Future<void> batchDelete() {
   WriteBatch batch = FirebaseFirestore.instance.batch();
 
   return users.get().then((querySnapshot) {
-    querySnapshot.documents.forEach((document) {
+    querySnapshot.docs.forEach((document) {
       batch.delete(document.reference);
     });
 
